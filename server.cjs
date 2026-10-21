@@ -1,5 +1,5 @@
 'use strict';
-// Sample API untuk praktikum Teknologi Gawai: 3 resource (buku, menu, event),
+// DummyAPI: 3 resource (buku, menu, event),
 // masing-masing CRUD lengkap. Tanpa dependensi, cukup Node.js bawaan.
 const http = require('http');
 const fs = require('fs');
@@ -163,7 +163,7 @@ function handleList(req, res, name, query) {
 async function handleApi(req, res, parts, query) {
   if (parts.length === 1) {
     return ok(res, {
-      nama: 'Sample API Teknologi Gawai',
+      nama: 'DummyAPI',
       apps: Object.entries(RESOURCES).map(([key, cfg]) => ({
         app: cfg.label, base_url: '/api/' + key, total_data: store[key].length,
         endpoints: ['GET /api/' + key, 'GET /api/' + key + '/:id', 'POST /api/' + key, 'PUT /api/' + key + '/:id', 'PATCH /api/' + key + '/:id', 'DELETE /api/' + key + '/:id'],

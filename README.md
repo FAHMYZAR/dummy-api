@@ -1,6 +1,6 @@
 # DummyAPI
 
-API dummy buat latihan. Sample REST API untuk praktikum Teknologi Gawai: tiga resource (buku, menu, event), masing-masing 15 data contoh, CRUD lengkap, plus dokumentasi Swagger yang bisa langsung dicoba.
+API dummy buat latihan. Tiga resource (buku, menu, event), masing-masing 15 data contoh, CRUD lengkap, plus dokumentasi Swagger yang bisa langsung dicoba.
 
 ![Tampilan dokumentasi DummyAPI](docs/screenshot.jpg)
 

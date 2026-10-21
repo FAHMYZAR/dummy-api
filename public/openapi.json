@@ -1,0 +1,2183 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Latihan API🔥 ",
+    "version": "1.0.0",
+    "description": "API dummy for latihan. Sample App: buku, menu, event. Noneed login, langsung test aja lewat tombol Try it out."
+  },
+  "servers": [
+    {
+      "url": "https://api-dump.owebku.site",
+      "description": "Server publik GawaiAPI"
+    }
+  ],
+  "tags": [
+    {
+      "name": "PerpustakaanKu",
+      "description": "Data buku"
+    },
+    {
+      "name": "KantinKu",
+      "description": "Data menu kantin"
+    },
+    {
+      "name": "EventKu",
+      "description": "Data acara kampus"
+    }
+  ],
+  "paths": {
+    "/api/buku": {
+      "get": {
+        "tags": [
+          "PerpustakaanKu"
+        ],
+        "summary": "Ambil semua",
+        "operationId": "getBukuList",
+        "description": "Contoh Dart (Flutter, package http):\n\n```dart\nimport 'dart:convert';\nimport 'package:http/http.dart' as http;\n\nFuture<void> ambilBuku() async {\n  final res = await http.get(Uri.parse('https://api-dump.owebku.site/api/buku'));\n  final body = jsonDecode(res.body);\n  print(body['data']);\n}\n```\n\nContoh Python (requests):\n\n```python\nimport requests\n\nres = requests.get(\"https://api-dump.owebku.site/api/buku\")\nprint(res.json()[\"data\"])\n```",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Kata kunci pencarian",
+            "example": ""
+          },
+          {
+            "name": "genre",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter berdasarkan genre",
+            "example": "Fiksi"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Buku"
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "example": 15
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": [
+                    {
+                      "id": 1,
+                      "judul": "Laskar Pelangi",
+                      "penulis": "Andrea Hirata",
+                      "penerbit": "Bentang Pustaka",
+                      "tahun_terbit": 2005,
+                      "genre": "Fiksi",
+                      "isbn": "9789793062792",
+                      "stok": 12,
+                      "halaman": 529,
+                      "gambar": "https://covers.openlibrary.org/b/id/7079796-L.jpg",
+                      "sinopsis": "Kisah sepuluh anak dari keluarga miskin di Belitung yang bersekolah di sekolah Muhammadiyah yang nyaris ditutup. Cerita tentang persahabatan, mimpi, dan perjuangan Bu Mus serta Pak Harfan mempertahankan pendidikan untuk anak-anak kurang mampu."
+                    },
+                    {
+                      "id": 2,
+                      "judul": "Negeri 5 Menara",
+                      "penulis": "Ahmad Fuadi",
+                      "penerbit": "Gramedia Pustaka Utama",
+                      "tahun_terbit": 2009,
+                      "genre": "Fiksi",
+                      "isbn": "9789792248616",
+                      "stok": 8,
+                      "halaman": 423,
+                      "gambar": "https://covers.openlibrary.org/b/id/14303993-L.jpg",
+                      "sinopsis": "Alif Fikri, anak Minangkabau yang terpaksa masuk pondok pesantren di Jawa Timur. Bersama lima sahabatnya ia belajar arti kesungguhan lewat mantra man jadda wajada, dan memandang menara masjid sambil membayangkan lima negeri yang akan mereka taklukkan."
+                    }
+                  ],
+                  "total": 15
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Kena rate limit, terlalu banyak request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Terlalu banyak request. Tunggu sebentar, lalu coba lagi."
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "PerpustakaanKu"
+        ],
+        "summary": "Tambah data",
+        "operationId": "postBuku",
+        "description": "Contoh Dart (Flutter, package http):\n\n```dart\nimport 'dart:convert';\nimport 'package:http/http.dart' as http;\n\nFuture<void> tambahBuku(Map<String, dynamic> data) async {\n  final res = await http.post(\n    Uri.parse('https://api-dump.owebku.site/api/buku'),\n    headers: {'Content-Type': 'application/json'},\n    body: jsonEncode(data),\n  );\n  print(res.statusCode);\n}\n```\n\nContoh Python (requests):\n\n```python\nimport requests\n\ndata = {...}  # isi semua field wajib, contoh lengkap ada di Request body di bawah\nres = requests.post(\"https://api-dump.owebku.site/api/buku\", json=data)\nprint(res.status_code, res.json())\n```",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BukuInput"
+              },
+              "example": {
+                "judul": "Buku Baru",
+                "penulis": "Nama Penulis",
+                "penerbit": "Nama Penerbit",
+                "tahun_terbit": 2026,
+                "genre": "Fiksi",
+                "isbn": "9780000000000",
+                "stok": 5,
+                "halaman": 200,
+                "sinopsis": "Sinopsis singkat buku.",
+                "gambar": "https://example.com/cover.jpg"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Buku"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "data berhasil ditambahkan",
+                  "data": {
+                    "judul": "Buku Baru",
+                    "penulis": "Nama Penulis",
+                    "penerbit": "Nama Penerbit",
+                    "tahun_terbit": 2026,
+                    "genre": "Fiksi",
+                    "isbn": "9780000000000",
+                    "stok": 5,
+                    "halaman": 200,
+                    "sinopsis": "Sinopsis singkat buku.",
+                    "gambar": "https://example.com/cover.jpg",
+                    "id": 16
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ada field wajib yang kosong atau formatnya salah",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "data tidak ditemukan"
+                    }
+                  }
+                },
+                "example": {
+                  "success": false,
+                  "message": "field wajib belum diisi: judul, penulis, penerbit"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Kena rate limit, terlalu banyak request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Terlalu banyak request. Tunggu sebentar, lalu coba lagi."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/buku/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          },
+          "description": "ID data",
+          "example": 1
+        }
+      ],
+      "get": {
+        "tags": [
+          "PerpustakaanKu"
+        ],
+        "summary": "Ambil satu data",
+        "operationId": "getBuku",
+        "description": "Contoh Dart (Flutter, package http):\n\n```dart\nimport 'dart:convert';\nimport 'package:http/http.dart' as http;\n\nFuture<void> ambilBukuById(int id) async {\n  final res = await http.get(Uri.parse('https://api-dump.owebku.site/api/buku/$id'));\n  print(jsonDecode(res.body)['data']);\n}\n```\n\nContoh Python (requests):\n\n```python\nimport requests\n\nres = requests.get(\"https://api-dump.owebku.site/api/buku/1\")\nprint(res.json()[\"data\"])\n```",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Buku"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "id": 1,
+                    "judul": "Laskar Pelangi",
+                    "penulis": "Andrea Hirata",
+                    "penerbit": "Bentang Pustaka",
+                    "tahun_terbit": 2005,
+                    "genre": "Fiksi",
+                    "isbn": "9789793062792",
+                    "stok": 12,
+                    "halaman": 529,
+                    "gambar": "https://covers.openlibrary.org/b/id/7079796-L.jpg",
+                    "sinopsis": "Kisah sepuluh anak dari keluarga miskin di Belitung yang bersekolah di sekolah Muhammadiyah yang nyaris ditutup. Cerita tentang persahabatan, mimpi, dan perjuangan Bu Mus serta Pak Harfan mempertahankan pendidikan untuk anak-anak kurang mampu."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Datanya nggak ada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "data tidak ditemukan"
+                    }
+                  }
+                },
+                "example": {
+                  "success": false,
+                  "message": "data buku dengan id 99 tidak ditemukan"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Kena rate limit, terlalu banyak request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Terlalu banyak request. Tunggu sebentar, lalu coba lagi."
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "PerpustakaanKu"
+        ],
+        "summary": "Ubah data",
+        "operationId": "putBuku",
+        "description": "Contoh Dart (Flutter, package http):\n\n```dart\nimport 'dart:convert';\nimport 'package:http/http.dart' as http;\n\nFuture<void> ubahBuku(int id, Map<String, dynamic> data) async {\n  final res = await http.put(\n    Uri.parse('https://api-dump.owebku.site/api/buku/$id'),\n    headers: {'Content-Type': 'application/json'},\n    body: jsonEncode(data),\n  );\n  print(res.statusCode);\n}\n```\n\nContoh Python (requests):\n\n```python\nimport requests\n\ndata = {\"...\": \"...\"}  # kirim field yang mau diubah saja\nres = requests.put(\"https://api-dump.owebku.site/api/buku/1\", json=data)\nprint(res.status_code, res.json())\n```",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BukuInput"
+              },
+              "example": {
+                "stok": 20
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Buku"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "data berhasil diperbarui",
+                  "data": {
+                    "id": 1,
+                    "judul": "Laskar Pelangi",
+                    "penulis": "Andrea Hirata",
+                    "penerbit": "Bentang Pustaka",
+                    "tahun_terbit": 2005,
+                    "genre": "Fiksi",
+                    "isbn": "9789793062792",
+                    "stok": 20,
+                    "halaman": 529,
+                    "gambar": "https://covers.openlibrary.org/b/id/7079796-L.jpg",
+                    "sinopsis": "Kisah sepuluh anak dari keluarga miskin di Belitung yang bersekolah di sekolah Muhammadiyah yang nyaris ditutup. Cerita tentang persahabatan, mimpi, dan perjuangan Bu Mus serta Pak Harfan mempertahankan pendidikan untuk anak-anak kurang mampu."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Datanya nggak ada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "data tidak ditemukan"
+                    }
+                  }
+                },
+                "example": {
+                  "success": false,
+                  "message": "data buku dengan id 99 tidak ditemukan"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Kena rate limit, terlalu banyak request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Terlalu banyak request. Tunggu sebentar, lalu coba lagi."
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "PerpustakaanKu"
+        ],
+        "summary": "Ubah sebagian data",
+        "operationId": "patchBuku",
+        "description": "Contoh Dart (Flutter, package http):\n\n```dart\nimport 'dart:convert';\nimport 'package:http/http.dart' as http;\n\nFuture<void> ubahBuku(int id, Map<String, dynamic> data) async {\n  final res = await http.patch(\n    Uri.parse('https://api-dump.owebku.site/api/buku/$id'),\n    headers: {'Content-Type': 'application/json'},\n    body: jsonEncode(data),\n  );\n  print(res.statusCode);\n}\n```\n\nContoh Python (requests):\n\n```python\nimport requests\n\ndata = {\"...\": \"...\"}  # kirim field yang mau diubah saja\nres = requests.patch(\"https://api-dump.owebku.site/api/buku/1\", json=data)\nprint(res.status_code, res.json())\n```",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BukuInput"
+              },
+              "example": {
+                "stok": 20
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Buku"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "data berhasil diperbarui",
+                  "data": {
+                    "id": 1,
+                    "judul": "Laskar Pelangi",
+                    "penulis": "Andrea Hirata",
+                    "penerbit": "Bentang Pustaka",
+                    "tahun_terbit": 2005,
+                    "genre": "Fiksi",
+                    "isbn": "9789793062792",
+                    "stok": 20,
+                    "halaman": 529,
+                    "gambar": "https://covers.openlibrary.org/b/id/7079796-L.jpg",
+                    "sinopsis": "Kisah sepuluh anak dari keluarga miskin di Belitung yang bersekolah di sekolah Muhammadiyah yang nyaris ditutup. Cerita tentang persahabatan, mimpi, dan perjuangan Bu Mus serta Pak Harfan mempertahankan pendidikan untuk anak-anak kurang mampu."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Datanya nggak ada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "data tidak ditemukan"
+                    }
+                  }
+                },
+                "example": {
+                  "success": false,
+                  "message": "data buku dengan id 99 tidak ditemukan"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Kena rate limit, terlalu banyak request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Terlalu banyak request. Tunggu sebentar, lalu coba lagi."
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "PerpustakaanKu"
+        ],
+        "summary": "Hapus data",
+        "operationId": "deleteBuku",
+        "description": "Contoh Dart (Flutter, package http):\n\n```dart\nimport 'dart:convert';\nimport 'package:http/http.dart' as http;\n\nFuture<void> hapusBuku(int id) async {\n  final res = await http.delete(Uri.parse('https://api-dump.owebku.site/api/buku/$id'));\n  print(res.statusCode);\n}\n```\n\nContoh Python (requests):\n\n```python\nimport requests\n\nres = requests.delete(\"https://api-dump.owebku.site/api/buku/1\")\nprint(res.status_code, res.json())\n```",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Buku"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "data berhasil dihapus",
+                  "data": {
+                    "id": 1,
+                    "judul": "Laskar Pelangi",
+                    "penulis": "Andrea Hirata",
+                    "penerbit": "Bentang Pustaka",
+                    "tahun_terbit": 2005,
+                    "genre": "Fiksi",
+                    "isbn": "9789793062792",
+                    "stok": 12,
+                    "halaman": 529,
+                    "gambar": "https://covers.openlibrary.org/b/id/7079796-L.jpg",
+                    "sinopsis": "Kisah sepuluh anak dari keluarga miskin di Belitung yang bersekolah di sekolah Muhammadiyah yang nyaris ditutup. Cerita tentang persahabatan, mimpi, dan perjuangan Bu Mus serta Pak Harfan mempertahankan pendidikan untuk anak-anak kurang mampu."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Datanya nggak ada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "data tidak ditemukan"
+                    }
+                  }
+                },
+                "example": {
+                  "success": false,
+                  "message": "data buku dengan id 99 tidak ditemukan"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Kena rate limit, terlalu banyak request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Terlalu banyak request. Tunggu sebentar, lalu coba lagi."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/menu": {
+      "get": {
+        "tags": [
+          "KantinKu"
+        ],
+        "summary": "Ambil semua",
+        "operationId": "getMenuList",
+        "description": "Contoh Dart (Flutter, package http):\n\n```dart\nimport 'dart:convert';\nimport 'package:http/http.dart' as http;\n\nFuture<void> ambilMenu() async {\n  final res = await http.get(Uri.parse('https://api-dump.owebku.site/api/menu'));\n  final body = jsonDecode(res.body);\n  print(body['data']);\n}\n```\n\nContoh Python (requests):\n\n```python\nimport requests\n\nres = requests.get(\"https://api-dump.owebku.site/api/menu\")\nprint(res.json()[\"data\"])\n```",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Kata kunci pencarian",
+            "example": ""
+          },
+          {
+            "name": "kategori",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter berdasarkan kategori",
+            "example": "Makanan"
+          },
+          {
+            "name": "tersedia",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Filter status ketersediaan menu",
+            "example": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Menu"
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "example": 15
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": [
+                    {
+                      "id": 1,
+                      "nama": "Nasi Goreng Spesial",
+                      "kategori": "Makanan",
+                      "harga": 25000,
+                      "tersedia": true,
+                      "rating": 4.8,
+                      "gambar": "https://www.kitchensanctuary.com/wp-content/uploads/2020/07/Nasi-Goreng-wide-FS-and-foodporn-57.jpg",
+                      "deskripsi": "Nasi goreng bumbu rempah dengan ayam suwir, udang, telur mata sapi, kerupuk, dan acar. Menu paling laris di kantin, dimasak dadakan di wajan panas."
+                    },
+                    {
+                      "id": 2,
+                      "nama": "Sate Ayam Madura",
+                      "kategori": "Makanan",
+                      "harga": 22000,
+                      "tersedia": true,
+                      "rating": 4.7,
+                      "gambar": "https://www.midliferadventure.com/wp-content/uploads/2024/06/Sate.jpg",
+                      "deskripsi": "Sepuluh tusuk sate ayam dibakar di atas arang, disiram bumbu kacang kental, kecap manis, dan bawang goreng. Disajikan dengan lontong dan irisan bawang merah."
+                    }
+                  ],
+                  "total": 15
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Kena rate limit, terlalu banyak request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Terlalu banyak request. Tunggu sebentar, lalu coba lagi."
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "KantinKu"
+        ],
+        "summary": "Tambah data",
+        "operationId": "postMenu",
+        "description": "Contoh Dart (Flutter, package http):\n\n```dart\nimport 'dart:convert';\nimport 'package:http/http.dart' as http;\n\nFuture<void> tambahMenu(Map<String, dynamic> data) async {\n  final res = await http.post(\n    Uri.parse('https://api-dump.owebku.site/api/menu'),\n    headers: {'Content-Type': 'application/json'},\n    body: jsonEncode(data),\n  );\n  print(res.statusCode);\n}\n```\n\nContoh Python (requests):\n\n```python\nimport requests\n\ndata = {...}  # isi semua field wajib, contoh lengkap ada di Request body di bawah\nres = requests.post(\"https://api-dump.owebku.site/api/menu\", json=data)\nprint(res.status_code, res.json())\n```",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MenuInput"
+              },
+              "example": {
+                "nama": "Cireng Isi Ayam",
+                "kategori": "Camilan",
+                "harga": 10000,
+                "tersedia": true,
+                "rating": 4.2,
+                "deskripsi": "Cireng dengan isian ayam suwir pedas.",
+                "gambar": "https://example.com/cireng.jpg"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Menu"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "data berhasil ditambahkan",
+                  "data": {
+                    "nama": "Cireng Isi Ayam",
+                    "kategori": "Camilan",
+                    "harga": 10000,
+                    "tersedia": true,
+                    "rating": 4.2,
+                    "deskripsi": "Cireng dengan isian ayam suwir pedas.",
+                    "gambar": "https://example.com/cireng.jpg",
+                    "id": 16
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ada field wajib yang kosong atau formatnya salah",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "data tidak ditemukan"
+                    }
+                  }
+                },
+                "example": {
+                  "success": false,
+                  "message": "field wajib belum diisi: nama, kategori, harga"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Kena rate limit, terlalu banyak request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Terlalu banyak request. Tunggu sebentar, lalu coba lagi."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/menu/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          },
+          "description": "ID data",
+          "example": 1
+        }
+      ],
+      "get": {
+        "tags": [
+          "KantinKu"
+        ],
+        "summary": "Ambil satu data",
+        "operationId": "getMenu",
+        "description": "Contoh Dart (Flutter, package http):\n\n```dart\nimport 'dart:convert';\nimport 'package:http/http.dart' as http;\n\nFuture<void> ambilMenuById(int id) async {\n  final res = await http.get(Uri.parse('https://api-dump.owebku.site/api/menu/$id'));\n  print(jsonDecode(res.body)['data']);\n}\n```\n\nContoh Python (requests):\n\n```python\nimport requests\n\nres = requests.get(\"https://api-dump.owebku.site/api/menu/1\")\nprint(res.json()[\"data\"])\n```",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Menu"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "id": 1,
+                    "nama": "Nasi Goreng Spesial",
+                    "kategori": "Makanan",
+                    "harga": 25000,
+                    "tersedia": true,
+                    "rating": 4.8,
+                    "gambar": "https://www.kitchensanctuary.com/wp-content/uploads/2020/07/Nasi-Goreng-wide-FS-and-foodporn-57.jpg",
+                    "deskripsi": "Nasi goreng bumbu rempah dengan ayam suwir, udang, telur mata sapi, kerupuk, dan acar. Menu paling laris di kantin, dimasak dadakan di wajan panas."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Datanya nggak ada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "data tidak ditemukan"
+                    }
+                  }
+                },
+                "example": {
+                  "success": false,
+                  "message": "data menu dengan id 99 tidak ditemukan"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Kena rate limit, terlalu banyak request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Terlalu banyak request. Tunggu sebentar, lalu coba lagi."
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "KantinKu"
+        ],
+        "summary": "Ubah data",
+        "operationId": "putMenu",
+        "description": "Contoh Dart (Flutter, package http):\n\n```dart\nimport 'dart:convert';\nimport 'package:http/http.dart' as http;\n\nFuture<void> ubahMenu(int id, Map<String, dynamic> data) async {\n  final res = await http.put(\n    Uri.parse('https://api-dump.owebku.site/api/menu/$id'),\n    headers: {'Content-Type': 'application/json'},\n    body: jsonEncode(data),\n  );\n  print(res.statusCode);\n}\n```\n\nContoh Python (requests):\n\n```python\nimport requests\n\ndata = {\"...\": \"...\"}  # kirim field yang mau diubah saja\nres = requests.put(\"https://api-dump.owebku.site/api/menu/1\", json=data)\nprint(res.status_code, res.json())\n```",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MenuInput"
+              },
+              "example": {
+                "harga": 12000,
+                "tersedia": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Menu"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "data berhasil diperbarui",
+                  "data": {
+                    "id": 1,
+                    "nama": "Nasi Goreng Spesial",
+                    "kategori": "Makanan",
+                    "harga": 12000,
+                    "tersedia": false,
+                    "rating": 4.8,
+                    "gambar": "https://www.kitchensanctuary.com/wp-content/uploads/2020/07/Nasi-Goreng-wide-FS-and-foodporn-57.jpg",
+                    "deskripsi": "Nasi goreng bumbu rempah dengan ayam suwir, udang, telur mata sapi, kerupuk, dan acar. Menu paling laris di kantin, dimasak dadakan di wajan panas."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Datanya nggak ada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "data tidak ditemukan"
+                    }
+                  }
+                },
+                "example": {
+                  "success": false,
+                  "message": "data menu dengan id 99 tidak ditemukan"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Kena rate limit, terlalu banyak request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Terlalu banyak request. Tunggu sebentar, lalu coba lagi."
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "KantinKu"
+        ],
+        "summary": "Ubah sebagian data",
+        "operationId": "patchMenu",
+        "description": "Contoh Dart (Flutter, package http):\n\n```dart\nimport 'dart:convert';\nimport 'package:http/http.dart' as http;\n\nFuture<void> ubahMenu(int id, Map<String, dynamic> data) async {\n  final res = await http.patch(\n    Uri.parse('https://api-dump.owebku.site/api/menu/$id'),\n    headers: {'Content-Type': 'application/json'},\n    body: jsonEncode(data),\n  );\n  print(res.statusCode);\n}\n```\n\nContoh Python (requests):\n\n```python\nimport requests\n\ndata = {\"...\": \"...\"}  # kirim field yang mau diubah saja\nres = requests.patch(\"https://api-dump.owebku.site/api/menu/1\", json=data)\nprint(res.status_code, res.json())\n```",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MenuInput"
+              },
+              "example": {
+                "harga": 12000,
+                "tersedia": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Menu"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "data berhasil diperbarui",
+                  "data": {
+                    "id": 1,
+                    "nama": "Nasi Goreng Spesial",
+                    "kategori": "Makanan",
+                    "harga": 12000,
+                    "tersedia": false,
+                    "rating": 4.8,
+                    "gambar": "https://www.kitchensanctuary.com/wp-content/uploads/2020/07/Nasi-Goreng-wide-FS-and-foodporn-57.jpg",
+                    "deskripsi": "Nasi goreng bumbu rempah dengan ayam suwir, udang, telur mata sapi, kerupuk, dan acar. Menu paling laris di kantin, dimasak dadakan di wajan panas."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Datanya nggak ada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "data tidak ditemukan"
+                    }
+                  }
+                },
+                "example": {
+                  "success": false,
+                  "message": "data menu dengan id 99 tidak ditemukan"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Kena rate limit, terlalu banyak request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Terlalu banyak request. Tunggu sebentar, lalu coba lagi."
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "KantinKu"
+        ],
+        "summary": "Hapus data",
+        "operationId": "deleteMenu",
+        "description": "Contoh Dart (Flutter, package http):\n\n```dart\nimport 'dart:convert';\nimport 'package:http/http.dart' as http;\n\nFuture<void> hapusMenu(int id) async {\n  final res = await http.delete(Uri.parse('https://api-dump.owebku.site/api/menu/$id'));\n  print(res.statusCode);\n}\n```\n\nContoh Python (requests):\n\n```python\nimport requests\n\nres = requests.delete(\"https://api-dump.owebku.site/api/menu/1\")\nprint(res.status_code, res.json())\n```",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Menu"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "data berhasil dihapus",
+                  "data": {
+                    "id": 1,
+                    "nama": "Nasi Goreng Spesial",
+                    "kategori": "Makanan",
+                    "harga": 25000,
+                    "tersedia": true,
+                    "rating": 4.8,
+                    "gambar": "https://www.kitchensanctuary.com/wp-content/uploads/2020/07/Nasi-Goreng-wide-FS-and-foodporn-57.jpg",
+                    "deskripsi": "Nasi goreng bumbu rempah dengan ayam suwir, udang, telur mata sapi, kerupuk, dan acar. Menu paling laris di kantin, dimasak dadakan di wajan panas."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Datanya nggak ada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "data tidak ditemukan"
+                    }
+                  }
+                },
+                "example": {
+                  "success": false,
+                  "message": "data menu dengan id 99 tidak ditemukan"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Kena rate limit, terlalu banyak request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Terlalu banyak request. Tunggu sebentar, lalu coba lagi."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/event": {
+      "get": {
+        "tags": [
+          "EventKu"
+        ],
+        "summary": "Ambil semua",
+        "operationId": "getEventList",
+        "description": "Contoh Dart (Flutter, package http):\n\n```dart\nimport 'dart:convert';\nimport 'package:http/http.dart' as http;\n\nFuture<void> ambilEvent() async {\n  final res = await http.get(Uri.parse('https://api-dump.owebku.site/api/event'));\n  final body = jsonDecode(res.body);\n  print(body['data']);\n}\n```\n\nContoh Python (requests):\n\n```python\nimport requests\n\nres = requests.get(\"https://api-dump.owebku.site/api/event\")\nprint(res.json()[\"data\"])\n```",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Kata kunci pencarian",
+            "example": ""
+          },
+          {
+            "name": "kategori",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter berdasarkan kategori",
+            "example": "Seminar"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Event"
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "example": 15
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": [
+                    {
+                      "id": 1,
+                      "nama": "Seminar Nasional Kecerdasan Buatan",
+                      "kategori": "Seminar",
+                      "tanggal": "2026-11-14",
+                      "waktu": "08:00 - 12:00 WIB",
+                      "lokasi": "Aula Utama Kampus",
+                      "kuota": 300,
+                      "terdaftar": 187,
+                      "penyelenggara": "HIMATIK",
+                      "gambar": "https://bandungmu.com/wp-content/uploads/2023/03/WhatsApp-Image-2023-03-20-at-13.57.02-1.jpeg",
+                      "deskripsi": "Seminar nasional membahas perkembangan AI generatif dan dampaknya bagi dunia kerja Indonesia. Menghadirkan praktisi industri dan akademisi. Peserta mendapat e-sertifikat dan materi seminar."
+                    },
+                    {
+                      "id": 2,
+                      "nama": "Workshop Pemrograman Mobile dengan Flutter",
+                      "kategori": "Workshop",
+                      "tanggal": "2026-11-21",
+                      "waktu": "09:00 - 15:00 WIB",
+                      "lokasi": "Lab Komputer 2",
+                      "kuota": 40,
+                      "terdaftar": 38,
+                      "penyelenggara": "Laboratorium Informatika",
+                      "gambar": "https://www.iit.edu/sites/default/files/styles/width_850/public/2025-07/ai_coding_blog_1280x850.jpg?itok=f37CR_CZ",
+                      "deskripsi": "Workshop hands-on membangun aplikasi mobile pertama dengan Flutter, dari instalasi sampai consuming REST API. Peserta wajib membawa laptop. Di akhir sesi setiap peserta punya aplikasi yang bisa dijalankan."
+                    }
+                  ],
+                  "total": 15
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Kena rate limit, terlalu banyak request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Terlalu banyak request. Tunggu sebentar, lalu coba lagi."
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "EventKu"
+        ],
+        "summary": "Tambah data",
+        "operationId": "postEvent",
+        "description": "Contoh Dart (Flutter, package http):\n\n```dart\nimport 'dart:convert';\nimport 'package:http/http.dart' as http;\n\nFuture<void> tambahEvent(Map<String, dynamic> data) async {\n  final res = await http.post(\n    Uri.parse('https://api-dump.owebku.site/api/event'),\n    headers: {'Content-Type': 'application/json'},\n    body: jsonEncode(data),\n  );\n  print(res.statusCode);\n}\n```\n\nContoh Python (requests):\n\n```python\nimport requests\n\ndata = {...}  # isi semua field wajib, contoh lengkap ada di Request body di bawah\nres = requests.post(\"https://api-dump.owebku.site/api/event\", json=data)\nprint(res.status_code, res.json())\n```",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventInput"
+              },
+              "example": {
+                "nama": "Acara Baru",
+                "deskripsi": "Deskripsi singkat acara.",
+                "kategori": "Seminar",
+                "tanggal": "2026-12-01",
+                "waktu": "09:00 - 11:00 WIB",
+                "lokasi": "Aula Kampus",
+                "kuota": 100,
+                "terdaftar": 0,
+                "penyelenggara": "BEM",
+                "gambar": "https://example.com/poster.jpg"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Event"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "data berhasil ditambahkan",
+                  "data": {
+                    "nama": "Acara Baru",
+                    "deskripsi": "Deskripsi singkat acara.",
+                    "kategori": "Seminar",
+                    "tanggal": "2026-12-01",
+                    "waktu": "09:00 - 11:00 WIB",
+                    "lokasi": "Aula Kampus",
+                    "kuota": 100,
+                    "terdaftar": 0,
+                    "penyelenggara": "BEM",
+                    "gambar": "https://example.com/poster.jpg",
+                    "id": 16
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ada field wajib yang kosong atau formatnya salah",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "data tidak ditemukan"
+                    }
+                  }
+                },
+                "example": {
+                  "success": false,
+                  "message": "field wajib belum diisi: nama, deskripsi, kategori"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Kena rate limit, terlalu banyak request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Terlalu banyak request. Tunggu sebentar, lalu coba lagi."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/event/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          },
+          "description": "ID data",
+          "example": 1
+        }
+      ],
+      "get": {
+        "tags": [
+          "EventKu"
+        ],
+        "summary": "Ambil satu data",
+        "operationId": "getEvent",
+        "description": "Contoh Dart (Flutter, package http):\n\n```dart\nimport 'dart:convert';\nimport 'package:http/http.dart' as http;\n\nFuture<void> ambilEventById(int id) async {\n  final res = await http.get(Uri.parse('https://api-dump.owebku.site/api/event/$id'));\n  print(jsonDecode(res.body)['data']);\n}\n```\n\nContoh Python (requests):\n\n```python\nimport requests\n\nres = requests.get(\"https://api-dump.owebku.site/api/event/1\")\nprint(res.json()[\"data\"])\n```",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Event"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "id": 1,
+                    "nama": "Seminar Nasional Kecerdasan Buatan",
+                    "kategori": "Seminar",
+                    "tanggal": "2026-11-14",
+                    "waktu": "08:00 - 12:00 WIB",
+                    "lokasi": "Aula Utama Kampus",
+                    "kuota": 300,
+                    "terdaftar": 187,
+                    "penyelenggara": "HIMATIK",
+                    "gambar": "https://bandungmu.com/wp-content/uploads/2023/03/WhatsApp-Image-2023-03-20-at-13.57.02-1.jpeg",
+                    "deskripsi": "Seminar nasional membahas perkembangan AI generatif dan dampaknya bagi dunia kerja Indonesia. Menghadirkan praktisi industri dan akademisi. Peserta mendapat e-sertifikat dan materi seminar."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Datanya nggak ada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "data tidak ditemukan"
+                    }
+                  }
+                },
+                "example": {
+                  "success": false,
+                  "message": "data event dengan id 99 tidak ditemukan"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Kena rate limit, terlalu banyak request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Terlalu banyak request. Tunggu sebentar, lalu coba lagi."
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "EventKu"
+        ],
+        "summary": "Ubah data",
+        "operationId": "putEvent",
+        "description": "Contoh Dart (Flutter, package http):\n\n```dart\nimport 'dart:convert';\nimport 'package:http/http.dart' as http;\n\nFuture<void> ubahEvent(int id, Map<String, dynamic> data) async {\n  final res = await http.put(\n    Uri.parse('https://api-dump.owebku.site/api/event/$id'),\n    headers: {'Content-Type': 'application/json'},\n    body: jsonEncode(data),\n  );\n  print(res.statusCode);\n}\n```\n\nContoh Python (requests):\n\n```python\nimport requests\n\ndata = {\"...\": \"...\"}  # kirim field yang mau diubah saja\nres = requests.put(\"https://api-dump.owebku.site/api/event/1\", json=data)\nprint(res.status_code, res.json())\n```",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventInput"
+              },
+              "example": {
+                "terdaftar": 50
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Event"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "data berhasil diperbarui",
+                  "data": {
+                    "id": 1,
+                    "nama": "Seminar Nasional Kecerdasan Buatan",
+                    "kategori": "Seminar",
+                    "tanggal": "2026-11-14",
+                    "waktu": "08:00 - 12:00 WIB",
+                    "lokasi": "Aula Utama Kampus",
+                    "kuota": 300,
+                    "terdaftar": 50,
+                    "penyelenggara": "HIMATIK",
+                    "gambar": "https://bandungmu.com/wp-content/uploads/2023/03/WhatsApp-Image-2023-03-20-at-13.57.02-1.jpeg",
+                    "deskripsi": "Seminar nasional membahas perkembangan AI generatif dan dampaknya bagi dunia kerja Indonesia. Menghadirkan praktisi industri dan akademisi. Peserta mendapat e-sertifikat dan materi seminar."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Datanya nggak ada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "data tidak ditemukan"
+                    }
+                  }
+                },
+                "example": {
+                  "success": false,
+                  "message": "data event dengan id 99 tidak ditemukan"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Kena rate limit, terlalu banyak request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Terlalu banyak request. Tunggu sebentar, lalu coba lagi."
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "EventKu"
+        ],
+        "summary": "Ubah sebagian data",
+        "operationId": "patchEvent",
+        "description": "Contoh Dart (Flutter, package http):\n\n```dart\nimport 'dart:convert';\nimport 'package:http/http.dart' as http;\n\nFuture<void> ubahEvent(int id, Map<String, dynamic> data) async {\n  final res = await http.patch(\n    Uri.parse('https://api-dump.owebku.site/api/event/$id'),\n    headers: {'Content-Type': 'application/json'},\n    body: jsonEncode(data),\n  );\n  print(res.statusCode);\n}\n```\n\nContoh Python (requests):\n\n```python\nimport requests\n\ndata = {\"...\": \"...\"}  # kirim field yang mau diubah saja\nres = requests.patch(\"https://api-dump.owebku.site/api/event/1\", json=data)\nprint(res.status_code, res.json())\n```",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventInput"
+              },
+              "example": {
+                "terdaftar": 50
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Event"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "data berhasil diperbarui",
+                  "data": {
+                    "id": 1,
+                    "nama": "Seminar Nasional Kecerdasan Buatan",
+                    "kategori": "Seminar",
+                    "tanggal": "2026-11-14",
+                    "waktu": "08:00 - 12:00 WIB",
+                    "lokasi": "Aula Utama Kampus",
+                    "kuota": 300,
+                    "terdaftar": 50,
+                    "penyelenggara": "HIMATIK",
+                    "gambar": "https://bandungmu.com/wp-content/uploads/2023/03/WhatsApp-Image-2023-03-20-at-13.57.02-1.jpeg",
+                    "deskripsi": "Seminar nasional membahas perkembangan AI generatif dan dampaknya bagi dunia kerja Indonesia. Menghadirkan praktisi industri dan akademisi. Peserta mendapat e-sertifikat dan materi seminar."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Datanya nggak ada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "data tidak ditemukan"
+                    }
+                  }
+                },
+                "example": {
+                  "success": false,
+                  "message": "data event dengan id 99 tidak ditemukan"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Kena rate limit, terlalu banyak request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Terlalu banyak request. Tunggu sebentar, lalu coba lagi."
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "EventKu"
+        ],
+        "summary": "Hapus data",
+        "operationId": "deleteEvent",
+        "description": "Contoh Dart (Flutter, package http):\n\n```dart\nimport 'dart:convert';\nimport 'package:http/http.dart' as http;\n\nFuture<void> hapusEvent(int id) async {\n  final res = await http.delete(Uri.parse('https://api-dump.owebku.site/api/event/$id'));\n  print(res.statusCode);\n}\n```\n\nContoh Python (requests):\n\n```python\nimport requests\n\nres = requests.delete(\"https://api-dump.owebku.site/api/event/1\")\nprint(res.status_code, res.json())\n```",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Event"
+                    }
+                  }
+                },
+                "example": {
+                  "success": true,
+                  "message": "data berhasil dihapus",
+                  "data": {
+                    "id": 1,
+                    "nama": "Seminar Nasional Kecerdasan Buatan",
+                    "kategori": "Seminar",
+                    "tanggal": "2026-11-14",
+                    "waktu": "08:00 - 12:00 WIB",
+                    "lokasi": "Aula Utama Kampus",
+                    "kuota": 300,
+                    "terdaftar": 187,
+                    "penyelenggara": "HIMATIK",
+                    "gambar": "https://bandungmu.com/wp-content/uploads/2023/03/WhatsApp-Image-2023-03-20-at-13.57.02-1.jpeg",
+                    "deskripsi": "Seminar nasional membahas perkembangan AI generatif dan dampaknya bagi dunia kerja Indonesia. Menghadirkan praktisi industri dan akademisi. Peserta mendapat e-sertifikat dan materi seminar."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Datanya nggak ada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "data tidak ditemukan"
+                    }
+                  }
+                },
+                "example": {
+                  "success": false,
+                  "message": "data event dengan id 99 tidak ditemukan"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Kena rate limit, terlalu banyak request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Terlalu banyak request. Tunggu sebentar, lalu coba lagi."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          },
+          "message": {
+            "type": "string",
+            "example": "data tidak ditemukan"
+          }
+        }
+      },
+      "Buku": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID unik, dibuat otomatis oleh server",
+            "example": 1
+          },
+          "judul": {
+            "type": "string",
+            "description": "Judul buku",
+            "example": "Laskar Pelangi"
+          },
+          "penulis": {
+            "type": "string",
+            "description": "Nama penulis",
+            "example": "Andrea Hirata"
+          },
+          "penerbit": {
+            "type": "string",
+            "description": "Nama penerbit",
+            "example": "Bentang Pustaka"
+          },
+          "tahun_terbit": {
+            "type": "integer",
+            "description": "Tahun buku diterbitkan",
+            "example": 2005
+          },
+          "genre": {
+            "type": "string",
+            "description": "Kategori buku",
+            "example": "Fiksi"
+          },
+          "isbn": {
+            "type": "string",
+            "description": "Nomor ISBN buku",
+            "example": "9789793062792"
+          },
+          "stok": {
+            "type": "integer",
+            "description": "Jumlah eksemplar yang tersedia",
+            "example": 12
+          },
+          "halaman": {
+            "type": "integer",
+            "description": "Jumlah halaman",
+            "example": 529
+          },
+          "sinopsis": {
+            "type": "string",
+            "description": "Ringkasan isi buku",
+            "example": "Kisah sepuluh anak dari keluarga miskin di Belitung…"
+          },
+          "gambar": {
+            "type": "string",
+            "description": "URL gambar cover buku",
+            "example": "https://covers.openlibrary.org/b/id/7079796-L.jpg",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "judul",
+          "penulis",
+          "penerbit",
+          "tahun_terbit",
+          "genre",
+          "isbn",
+          "stok",
+          "halaman",
+          "sinopsis",
+          "gambar"
+        ]
+      },
+      "BukuInput": {
+        "type": "object",
+        "properties": {
+          "judul": {
+            "type": "string",
+            "description": "Judul buku",
+            "example": "Laskar Pelangi"
+          },
+          "penulis": {
+            "type": "string",
+            "description": "Nama penulis",
+            "example": "Andrea Hirata"
+          },
+          "penerbit": {
+            "type": "string",
+            "description": "Nama penerbit",
+            "example": "Bentang Pustaka"
+          },
+          "tahun_terbit": {
+            "type": "integer",
+            "description": "Tahun buku diterbitkan",
+            "example": 2005
+          },
+          "genre": {
+            "type": "string",
+            "description": "Kategori buku",
+            "example": "Fiksi"
+          },
+          "isbn": {
+            "type": "string",
+            "description": "Nomor ISBN buku",
+            "example": "9789793062792"
+          },
+          "stok": {
+            "type": "integer",
+            "description": "Jumlah eksemplar yang tersedia",
+            "example": 12
+          },
+          "halaman": {
+            "type": "integer",
+            "description": "Jumlah halaman",
+            "example": 529
+          },
+          "sinopsis": {
+            "type": "string",
+            "description": "Ringkasan isi buku",
+            "example": "Kisah sepuluh anak dari keluarga miskin di Belitung…"
+          },
+          "gambar": {
+            "type": "string",
+            "description": "URL gambar cover buku",
+            "example": "https://covers.openlibrary.org/b/id/7079796-L.jpg",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "judul",
+          "penulis",
+          "penerbit",
+          "tahun_terbit",
+          "genre",
+          "isbn",
+          "stok",
+          "halaman",
+          "sinopsis",
+          "gambar"
+        ]
+      },
+      "Menu": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID unik, dibuat otomatis oleh server",
+            "example": 1
+          },
+          "nama": {
+            "type": "string",
+            "description": "Nama menu",
+            "example": "Nasi Goreng Spesial"
+          },
+          "kategori": {
+            "type": "string",
+            "description": "Kategori: Makanan, Minuman, atau Camilan",
+            "example": "Makanan"
+          },
+          "harga": {
+            "type": "integer",
+            "description": "Harga dalam Rupiah",
+            "example": 25000
+          },
+          "tersedia": {
+            "type": "boolean",
+            "description": "Status menu bisa dipesan atau tidak",
+            "example": true
+          },
+          "rating": {
+            "type": "number",
+            "description": "Penilaian pengguna, skala 0 sampai 5",
+            "example": 4.8
+          },
+          "deskripsi": {
+            "type": "string",
+            "description": "Penjelasan singkat menu",
+            "example": "Nasi goreng bumbu rempah dengan ayam suwir…"
+          },
+          "gambar": {
+            "type": "string",
+            "description": "URL foto menu",
+            "example": "https://example.com/nasi-goreng.jpg",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "nama",
+          "kategori",
+          "harga",
+          "tersedia",
+          "deskripsi",
+          "gambar"
+        ]
+      },
+      "MenuInput": {
+        "type": "object",
+        "properties": {
+          "nama": {
+            "type": "string",
+            "description": "Nama menu",
+            "example": "Nasi Goreng Spesial"
+          },
+          "kategori": {
+            "type": "string",
+            "description": "Kategori: Makanan, Minuman, atau Camilan",
+            "example": "Makanan"
+          },
+          "harga": {
+            "type": "integer",
+            "description": "Harga dalam Rupiah",
+            "example": 25000
+          },
+          "tersedia": {
+            "type": "boolean",
+            "description": "Status menu bisa dipesan atau tidak",
+            "example": true
+          },
+          "rating": {
+            "type": "number",
+            "description": "Penilaian pengguna, skala 0 sampai 5",
+            "example": 4.8
+          },
+          "deskripsi": {
+            "type": "string",
+            "description": "Penjelasan singkat menu",
+            "example": "Nasi goreng bumbu rempah dengan ayam suwir…"
+          },
+          "gambar": {
+            "type": "string",
+            "description": "URL foto menu",
+            "example": "https://example.com/nasi-goreng.jpg",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "nama",
+          "kategori",
+          "harga",
+          "tersedia",
+          "deskripsi",
+          "gambar"
+        ]
+      },
+      "Event": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID unik, dibuat otomatis oleh server",
+            "example": 1
+          },
+          "nama": {
+            "type": "string",
+            "description": "Nama acara",
+            "example": "Seminar Nasional Kecerdasan Buatan"
+          },
+          "deskripsi": {
+            "type": "string",
+            "description": "Penjelasan acara",
+            "example": "Seminar nasional membahas perkembangan AI…"
+          },
+          "kategori": {
+            "type": "string",
+            "description": "Kategori: Seminar, Workshop, Lomba, Olahraga, Seni, Sosial, Kewirausahaan",
+            "example": "Seminar"
+          },
+          "tanggal": {
+            "type": "string",
+            "description": "Tanggal acara, format YYYY-MM-DD",
+            "example": "2026-11-14",
+            "format": "date"
+          },
+          "waktu": {
+            "type": "string",
+            "description": "Jam pelaksanaan",
+            "example": "08:00 - 12:00 WIB"
+          },
+          "lokasi": {
+            "type": "string",
+            "description": "Tempat acara",
+            "example": "Aula Utama Kampus"
+          },
+          "kuota": {
+            "type": "integer",
+            "description": "Kapasitas peserta",
+            "example": 300
+          },
+          "terdaftar": {
+            "type": "integer",
+            "description": "Jumlah peserta yang sudah mendaftar",
+            "example": 187
+          },
+          "penyelenggara": {
+            "type": "string",
+            "description": "Penyelenggara acara",
+            "example": "HIMATIK"
+          },
+          "gambar": {
+            "type": "string",
+            "description": "URL poster atau foto acara",
+            "example": "https://example.com/poster.jpg",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "nama",
+          "deskripsi",
+          "kategori",
+          "tanggal",
+          "waktu",
+          "lokasi",
+          "kuota",
+          "terdaftar",
+          "penyelenggara",
+          "gambar"
+        ]
+      },
+      "EventInput": {
+        "type": "object",
+        "properties": {
+          "nama": {
+            "type": "string",
+            "description": "Nama acara",
+            "example": "Seminar Nasional Kecerdasan Buatan"
+          },
+          "deskripsi": {
+            "type": "string",
+            "description": "Penjelasan acara",
+            "example": "Seminar nasional membahas perkembangan AI…"
+          },
+          "kategori": {
+            "type": "string",
+            "description": "Kategori: Seminar, Workshop, Lomba, Olahraga, Seni, Sosial, Kewirausahaan",
+            "example": "Seminar"
+          },
+          "tanggal": {
+            "type": "string",
+            "description": "Tanggal acara, format YYYY-MM-DD",
+            "example": "2026-11-14",
+            "format": "date"
+          },
+          "waktu": {
+            "type": "string",
+            "description": "Jam pelaksanaan",
+            "example": "08:00 - 12:00 WIB"
+          },
+          "lokasi": {
+            "type": "string",
+            "description": "Tempat acara",
+            "example": "Aula Utama Kampus"
+          },
+          "kuota": {
+            "type": "integer",
+            "description": "Kapasitas peserta",
+            "example": 300
+          },
+          "terdaftar": {
+            "type": "integer",
+            "description": "Jumlah peserta yang sudah mendaftar",
+            "example": 187
+          },
+          "penyelenggara": {
+            "type": "string",
+            "description": "Penyelenggara acara",
+            "example": "HIMATIK"
+          },
+          "gambar": {
+            "type": "string",
+            "description": "URL poster atau foto acara",
+            "example": "https://example.com/poster.jpg",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "nama",
+          "deskripsi",
+          "kategori",
+          "tanggal",
+          "waktu",
+          "lokasi",
+          "kuota",
+          "terdaftar",
+          "penyelenggara",
+          "gambar"
+        ]
+      }
+    }
+  }
+}

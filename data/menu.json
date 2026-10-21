@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "nama": "Nasi Goreng Spesial",
+    "kategori": "Makanan",
+    "harga": 25000,
+    "tersedia": true,
+    "rating": 4.8,
+    "gambar": "https://www.kitchensanctuary.com/wp-content/uploads/2020/07/Nasi-Goreng-wide-FS-and-foodporn-57.jpg",
+    "deskripsi": "Nasi goreng bumbu rempah dengan ayam suwir, udang, telur mata sapi, kerupuk, dan acar. Menu paling laris di kantin, dimasak dadakan di wajan panas."
+  },
+  {
+    "id": 2,
+    "nama": "Sate Ayam Madura",
+    "kategori": "Makanan",
+    "harga": 22000,
+    "tersedia": true,
+    "rating": 4.7,
+    "gambar": "https://www.midliferadventure.com/wp-content/uploads/2024/06/Sate.jpg",
+    "deskripsi": "Sepuluh tusuk sate ayam dibakar di atas arang, disiram bumbu kacang kental, kecap manis, dan bawang goreng. Disajikan dengan lontong dan irisan bawang merah."
+  },
+  {
+    "id": 3,
+    "nama": "Rendang Sapi",
+    "kategori": "Makanan",
+    "harga": 35000,
+    "tersedia": true,
+    "rating": 4.9,
+    "gambar": "https://www.carolinescooking.com/wp-content/uploads/2021/10/beef-rendang-photo.jpg",
+    "deskripsi": "Daging sapi dimasak perlahan dengan santan dan rempah sampai empuk dan bumbunya meresap. Disajikan dengan nasi hangat dan sambal hijau."
+  },
+  {
+    "id": 4,
+    "nama": "Bakso Sapi Komplit",
+    "kategori": "Makanan",
+    "harga": 18000,
+    "tersedia": true,
+    "rating": 4.6,
+    "gambar": "https://asianplated.com/wp-content/uploads/2025/07/best-Indonesian-Bakso-574x1024.jpeg",
+    "deskripsi": "Bakso sapi kenyal dengan bakso urat, tahu, siomay, dan mie kuning dalam kuah kaldu bening yang gurih. Lengkapi dengan sambal dan kecap sesuai selera."
+  },
+  {
+    "id": 5,
+    "nama": "Mie Ayam Bakso",
+    "kategori": "Makanan",
+    "harga": 15000,
+    "tersedia": true,
+    "rating": 4.5,
+    "gambar": "https://www.coworking.co.id/wp-content/uploads/2021/11/mie-ayam-abang-abang-1_43.jpeg",
+    "deskripsi": "Mie kenyal dengan topping ayam kecap, tiga butir bakso, sawi hijau, dan pangsit goreng. Kuah kaldu ayamnya ringan dan segar, favorit mahasiswa sepulang kuliah."
+  },
+  {
+    "id": 6,
+    "nama": "Soto Ayam Lamongan",
+    "kategori": "Makanan",
+    "harga": 17000,
+    "tersedia": true,
+    "rating": 4.6,
+    "gambar": "https://www.wokandskillet.com/wp-content/uploads/2025/02/soto-ayam-main-image.jpg",
+    "deskripsi": "Soto ayam kuah kuning dengan suwiran ayam, telur rebus, soun, dan taburan koya gurih khas Lamongan. Dimakan dengan nasi dan perasan jeruk nipis."
+  },
+  {
+    "id": 7,
+    "nama": "Gado-Gado Betawi",
+    "kategori": "Makanan",
+    "harga": 16000,
+    "tersedia": false,
+    "rating": 4.4,
+    "gambar": "https://i.pinimg.com/originals/03/7d/7f/037d7f345e68f0e33eb9b99542292029.jpg",
+    "deskripsi": "Sayuran rebus, tahu, tempe, telur, dan lontong disiram bumbu kacang yang diulek dadakan. Ditaburi emping dan bawang goreng. Pilihan sehat yang mengenyangkan."
+  },
+  {
+    "id": 8,
+    "nama": "Ayam Geprek Sambal Bawang",
+    "kategori": "Makanan",
+    "harga": 20000,
+    "tersedia": true,
+    "rating": 4.7,
+    "gambar": "https://zenaskitchen.com/wp-content/uploads/2026/03/ayam-geprek-indonesian-smashed-fried-chicken-2-1024x1024.jpg",
+    "deskripsi": "Ayam crispy digeprek dengan sambal bawang mentah yang pedasnya nendang. Level pedas bisa dipilih dari 1 sampai 10. Disajikan dengan nasi dan lalapan."
+  },
+  {
+    "id": 9,
+    "nama": "Nasi Padang Komplit",
+    "kategori": "Makanan",
+    "harga": 28000,
+    "tersedia": true,
+    "rating": 4.8,
+    "gambar": "https://akcdn.detik.net.id/visual/2022/06/12/nasi-padang-2_11.jpeg?w=480&q=90",
+    "deskripsi": "Nasi dengan rendang, ayam pop, gulai nangka, daun singkong, dan sambal hijau khas rumah makan Padang. Kuah gulainya bisa minta tambah, gratis."
+  },
+  {
+    "id": 10,
+    "nama": "Martabak Manis Cokelat Keju",
+    "kategori": "Camilan",
+    "harga": 30000,
+    "tersedia": true,
+    "rating": 4.8,
+    "gambar": "https://foodmenu.pu-bu.com/images/ideas/sea-sweetb-martabak-manis.webp",
+    "deskripsi": "Martabak manis tebal dan bersarang dengan isian cokelat meses dan keju parut yang melimpah, dioles mentega sampai harum. Cocok buat dibagi bareng teman."
+  },
+  {
+    "id": 11,
+    "nama": "Pisang Goreng Crispy",
+    "kategori": "Camilan",
+    "harga": 12000,
+    "tersedia": true,
+    "rating": 4.5,
+    "gambar": "https://kharismafmbandung.com/wp-content/uploads/2023/07/pisang-goreng.jpeg",
+    "deskripsi": "Pisang raja digoreng dengan adonan tepung renyah sampai keemasan. Manis alami pisangnya berpadu kulit crispy. Satu porsi isi lima potong."
+  },
+  {
+    "id": 12,
+    "nama": "Es Teh Manis",
+    "kategori": "Minuman",
+    "harga": 5000,
+    "tersedia": true,
+    "rating": 4.3,
+    "gambar": "https://i.pinimg.com/originals/7a/7f/69/7a7f693ff18ba1905912c6d3d1447169.jpg",
+    "deskripsi": "Teh melati diseduh pekat, disajikan dingin dengan es batu penuh segelas. Pendamping wajib semua makanan di kantin, manisnya pas tidak berlebihan."
+  },
+  {
+    "id": 13,
+    "nama": "Es Jeruk Peras",
+    "kategori": "Minuman",
+    "harga": 8000,
+    "tersedia": true,
+    "rating": 4.4,
+    "gambar": "https://www.jagel.id/api/listimage/v/Es-Jeruk-Peras-Original-1-96461e69cb08a967.jpg",
+    "deskripsi": "Jeruk peras asli tanpa pengawet, diperas saat dipesan. Segar, sedikit asam, dan kaya vitamin C. Bisa minta less sugar atau tanpa gula."
+  },
+  {
+    "id": 14,
+    "nama": "Kopi Tubruk",
+    "kategori": "Minuman",
+    "harga": 10000,
+    "tersedia": true,
+    "rating": 4.6,
+    "gambar": "https://sabani.com/wp-content/uploads/2021/10/kopi-hitam-tubruk.jpg",
+    "deskripsi": "Kopi robusta bubuk kasar diseduh langsung dengan air mendidih, ampasnya dibiarkan mengendap. Pahit mantap, teman setia begadang mengerjakan tugas."
+  },
+  {
+    "id": 15,
+    "nama": "Jus Alpukat",
+    "kategori": "Minuman",
+    "harga": 13000,
+    "tersedia": false,
+    "rating": 4.7,
+    "gambar": "https://ketchupwithlinda.com/wp-content/uploads/2021/06/Jus-Alpukat-Avocado-Shake-1-450x600.jpg",
+    "deskripsi": "Alpukat mentega diblender dengan susu kental manis dan sedikit gula, disiram lelehan cokelat di dinding gelas. Kental, creamy, dan mengenyangkan."
+  }
+]

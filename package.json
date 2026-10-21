@@ -1,0 +1,7 @@
+{
+  "name": "gawai-api",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Sample API untuk praktikum Teknologi Gawai",
+  "scripts": { "start": "node server.cjs" }
+}

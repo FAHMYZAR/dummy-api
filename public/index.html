@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DummyAPI — Dokumentasi API Teknologi Gawai</title>
+<meta name="description" content="Dokumentasi lengkap sample REST API untuk praktikum Teknologi Gawai: PerpustakaanKu, KantinKu, EventKu. Ada contoh request dan response, skema data, dan bisa dicoba langsung.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.17.14/swagger-ui.css">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:#fafafa}
+  .topbar-custom{background:#fff;border-bottom:1px solid #e2e8f0;padding:12px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .logo{width:38px;height:38px;border-radius:11px;background:#0f172a;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;flex-shrink:0}
+  .topbar-custom h1{font-size:17px;margin:0;line-height:1.2;color:#0f172a}
+  .topbar-custom p{font-size:12px;margin:0;color:#64748b}
+  .baseurl{margin-left:auto;display:flex;align-items:center;gap:8px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:999px;padding:5px 6px 5px 13px;max-width:100%}
+  .baseurl code{font-size:12px;color:#0f172a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .baseurl button{border:0;background:#0f172a;color:#fff;font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px;cursor:pointer}
+  .baseurl button:active{transform:scale(.96)}
+  .swagger-ui .topbar{display:none}
+  .swagger-ui .info{margin:28px 0 18px}
+  #swagger-ui{max-width:1460px;margin:0 auto}
+  .loading{padding:40px 20px;text-align:center;color:#64748b;font-size:14px}
+  footer{border-top:1px solid #e2e8f0;background:#fff;padding:18px 20px 28px;text-align:center;color:#64748b;font-size:12.5px;line-height:1.7}
+  @media (max-width:640px){ .baseurl{margin-left:0} }
+</style>
+</head>
+<body>
+
+<div class="topbar-custom">
+  <div class="logo">👱🏿‍♂️</div>
+  <div>
+    <h1>DummyAPI</h1>
+    <p>API dummy buat latihan</p>
+  </div>
+  <div class="baseurl">
+    <code id="base-url">memuat…</code>
+    <button type="button" id="copy-base">Salin</button>
+  </div>
+</div>
+
+<div id="swagger-ui"><div class="loading">Memuat dokumentasi…</div></div>
+
+<footer>
+  API dummy buat latihan. Datanya contoh dan dipakai bareng satu kelas, jadi isinya bisa berubah sewaktu-waktu.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.17.14/swagger-ui-bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.17.14/swagger-ui-standalone-preset.js"></script>
+<script>
+  document.getElementById('base-url').textContent = window.location.origin;
+  document.getElementById('copy-base').addEventListener('click', function () {
+    var btn = this;
+    navigator.clipboard.writeText(window.location.origin).then(function () {
+      btn.textContent = 'Tersalin';
+      setTimeout(function () { btn.textContent = 'Salin'; }, 1400);
+    }).catch(function () {});
+  });
+
+  fetch('/openapi.json')
+    .then(function (r) { return r.json(); })
+    .then(function (spec) {
+      spec.servers = [{ url: window.location.origin, description: 'Server GawaiAPI' }];
+      window.ui = SwaggerUIBundle({
+        spec: spec,
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+        layout: 'StandaloneLayout',
+        docExpansion: 'list',
+        defaultModelsExpandDepth: 1,
+        displayRequestDuration: true
+      });
+    })
+    .catch(function (e) {
+      document.querySelector('#swagger-ui .loading').textContent = 'Gagal memuat dokumentasi: ' + e.message;
+    });
+</script>
+</body>
+</html>
